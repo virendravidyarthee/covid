@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function isEmpty(text) {
   if (text == null || text.trim() === '') {
     return true;
@@ -7,6 +9,7 @@ export function isEmpty(text) {
 }
 
 export function isValidEmail(text) {
+  // eslint-disable-next-line
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (reg.test(text) === false) {
     return false;
@@ -16,6 +19,7 @@ export function isValidEmail(text) {
 }
 
 export function isValidPhoneNumber(text) {
+  // eslint-disable-next-line
   const reg = /(([+][(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))\s*[)]?[-\s\.]?[(]?[0-9]{1,3}[)]?([-\s\.]?[0-9]{3})([-\s\.]?[0-9]{3,4})/;
   if (reg.test(text) === false) {
     return false;
@@ -89,4 +93,14 @@ export const truncate = (input, truncateAfter) => {
   } else {
     return input;
   }
+};
+
+export const getLastNDays = n => {
+  return Array.from({ length: n }, (_, i) => {
+    return moment().subtract(i, 'days');
+  });
+};
+
+export const getNthDay = n => {
+  return moment().add(n, 'days');
 };
