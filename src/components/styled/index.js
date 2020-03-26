@@ -59,6 +59,10 @@ export const CenterAligned = styled.div`
   margin: auto;
 `;
 
+export const FullWidthDiv = styled.div`
+  width: 100%;
+`;
+
 export const PredictionTimelineContainer = styled.div`
   display: flex;
   flex-direction: row;

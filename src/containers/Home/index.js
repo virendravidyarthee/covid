@@ -37,7 +37,7 @@ import {
   StandardParagraph,
   FlatCredit,
   ColumnDiv,
-  HowItWorksContainer
+  HowItWorksContainer,
 } from '../../components/styled';
 import Loader from 'react-loader-spinner';
 import { XYPlot, HorizontalGridLines, XAxis, YAxis, LineMarkSeries, Crosshair } from 'react-vis';
@@ -126,7 +126,7 @@ class Home extends React.Component {
                 onMouseLeave={() => {
                   this.props.dispatch(clearCrosshairValues());
                 }}
-                margin={{ left: this.props.width * 0.11, right: 10, top: 50, bottom: 25 }}
+                margin={{ left: this.props.width * 0.11, right: 10, top: 30, bottom: 25 }}
                 xType="time"
                 height={this.props.height * 0.45}
                 width={this.props.width * 0.95}>
@@ -156,29 +156,37 @@ class Home extends React.Component {
                 <YAxis tickSize={1} />
               </XYPlot>
             </ChartContainer>
-            <HowItWorksContainer style={{ marginTop: '16px' }}>
-              <StandardText>{howItWorks}</StandardText>
-              <StandardText>{explanation}</StandardText>
-              <StandardParagraph>{growthRateSource}</StandardParagraph>
-            </HowItWorksContainer>
-            <div>
-              <StandardParagraph>{disclaimerTitle}</StandardParagraph>
-              <StandardParagraph>{disclaimerBody}</StandardParagraph>
-              <FlatCredit>
-                Icons made by{' '}
-                <a href="https://www.flaticon.com/authors/freepik" title="Freepik">
-                  Freepik
-                </a>{' '}
-                from{' '}
-                <a href="https://www.flaticon.com/" title="Flaticon">
-                  www.flaticon.com
-                </a>
-              </FlatCredit>
-            </div>
+            {this.props.height > 552 ? (
+              <div style={{ display: 'block' }}>
+                <HowItWorksContainer style={{ marginTop: '16px' }}>
+                  <StandardText>{howItWorks}</StandardText>
+                  <StandardText>{explanation}</StandardText>
+                  <StandardParagraph>{growthRateSource}</StandardParagraph>
+                </HowItWorksContainer>
+                <StandardParagraph>{disclaimerTitle}</StandardParagraph>
+                <StandardParagraph>{disclaimerBody}</StandardParagraph>
+                <FlatCredit>
+                  Icons made by{' '}
+                  <a href="https://www.flaticon.com/authors/freepik" title="Freepik">
+                    Freepik
+                  </a>{' '}
+                  from{' '}
+                  <a href="https://www.flaticon.com/" title="Flaticon">
+                    www.flaticon.com
+                  </a>
+                </FlatCredit>
+              </div>
+            ) : null}
           </div>
         ) : (
           <CenterAligned>
-            <Loader type="MutatingDots" color="yellow" height={100} width={100} />
+            <Loader
+              style={{ margin: 'auto' }}
+              type="MutatingDots"
+              color="yellow"
+              height={100}
+              width={100}
+            />
             <StandardText>Analysing.</StandardText>
             <StandardParagraph>Please stay on this page...</StandardParagraph>
           </CenterAligned>
