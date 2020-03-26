@@ -7,7 +7,7 @@ import Home from '../containers/Home';
 export function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
+      <Route path="/covid" exact component={Home} />
     </Switch>
   );
 }

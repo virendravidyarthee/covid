@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import { HashRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import history from './services/history';
 import { Routes } from './routes';
 
 function App() {
   return (
-    <HashRouter history={history}>
+    <Router history={history}>
       <Routes />
-    </HashRouter>
+    </Router>
   );
 }
 

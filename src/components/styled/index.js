@@ -24,6 +24,15 @@ export const CurrentCasesContainer = styled.div`
 export const StandardText = styled.h4`
   color: white;
   text-align: center;
+  margin-left: 4px;
+  margin-right: 4px;
+`;
+
+export const StandardParagraph = styled.p`
+  margin-top: 16px;
+  color: white;
+  text-align: center;
+  font-size: 11px;
 `;
 
 export const LargeText = styled.h1`
@@ -39,26 +48,34 @@ export const PredictionTimelineContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: 24px;
+  margin-left: 2px;
+  margin-right: 2px;
 `;
 
 export const PredictionDay = styled.div`
   flex-direction: column;
-  font-size: 10px;
 `;
 
 export const PredictionCountText = styled.p`
   color: yellow;
   text-align: center;
-  font-size: 15px;
+  font-size: 0.8rem;
+  margin-bottom: 16px;
 `;
 
 export const PredictionDateText = styled.p`
   color: white;
   text-align: center;
+  font-size: 0.5rem;
 `;
 
 export const ChartContainer = styled.div`
   color: white;
-  margin: 16px;
+  margin-top: 16px;
+`;
+
+export const FlatCredit = styled.div`
+  font-size: 9px;
+  margin-top: 32px;
+  text-align: center;
 `;

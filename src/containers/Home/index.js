@@ -25,10 +25,22 @@ import {
   PredictionCountText,
   PredictionDateText,
   ChartContainer,
+  StandardParagraph,
+  FlatCredit,
 } from '../../components/styled';
 import Loader from 'react-loader-spinner';
 import { XYPlot, HorizontalGridLines, XAxis, YAxis, LineMarkSeries, Crosshair } from 'react-vis';
 import 'react-vis/dist/style.css';
+import {
+  pageTitle,
+  currentNumberOfCases,
+  totalProjections,
+  howItWorks,
+  explanation,
+  growthRateSource,
+  disclaimerTitle,
+  disclaimerBody,
+} from '../../utils/data';
 
 const HomeTag = styled.div`
   width: 100%;
@@ -36,6 +48,7 @@ const HomeTag = styled.div`
   display: flex;
   flex-direction: column;
   background: ${colors.pageBackground};
+  overflow-y: scroll;
 `;
 
 class Home extends React.Component {
@@ -58,15 +71,13 @@ class Home extends React.Component {
     this.props.dispatch(updateDimensions(window.innerWidth, window.innerHeight));
   }
   render() {
-    console.log(this.props.graphData);
-
     let todaysRecord = this.props.lastWeek[this.props.lastWeek.length - 1];
     const getPredictionDays = predictionArray => {
       return predictionArray.map((prediction, index) => {
         return (
           <PredictionDay key={index}>
             <PredictionCountText>{prediction.total_cases}</PredictionCountText>
-            <PredictionDateText>{prediction.date.format('ddd, Do MMM')}</PredictionDateText>
+            <PredictionDateText>{prediction.date.format('ddd,D/M')}</PredictionDateText>
           </PredictionDay>
         );
       });
@@ -84,12 +95,13 @@ class Home extends React.Component {
       return (
         <HomeTag>
           <HomeHeader>
-            <HeaderText>Covid-19 predictions in India</HeaderText>
+            <HeaderText>{pageTitle}</HeaderText>
           </HomeHeader>
           <CurrentCasesContainer>
-            <StandardText>Current number of cases</StandardText>
+            <StandardText>{currentNumberOfCases}</StandardText>
             <LargeText>{todaysRecord.total_cases}</LargeText>
           </CurrentCasesContainer>
+          <StandardParagraph>{totalProjections}</StandardParagraph>
           <PredictionTimelineContainer>
             {getPredictionDays(this.props.nextWeek)}
           </PredictionTimelineContainer>
@@ -98,9 +110,9 @@ class Home extends React.Component {
               onMouseLeave={() => {
                 this.props.dispatch(clearCrosshairValues());
               }}
-              margin={{ left: this.props.width * 0.09, right: 10, top: 10, bottom: 40 }}
+              margin={{ left: this.props.width * 0.11, right: 10, top: 50, bottom: 25 }}
               xType="time"
-              height={300}
+              height={this.props.height * 0.45}
               width={this.props.width * 0.95}>
               <LineMarkSeries
                 onNearestX={value => {
@@ -128,6 +140,25 @@ class Home extends React.Component {
               <YAxis tickSize={1} />
             </XYPlot>
           </ChartContainer>
+          <CurrentCasesContainer style={{ marginTop: '16px' }}>
+            <StandardText>{howItWorks}</StandardText>
+            <StandardText>{explanation}</StandardText>
+            <StandardParagraph>{growthRateSource}</StandardParagraph>
+          </CurrentCasesContainer>
+          <div>
+            <StandardParagraph>{disclaimerTitle}</StandardParagraph>
+            <StandardParagraph>{disclaimerBody}</StandardParagraph>
+            <FlatCredit>
+              Icons made by{' '}
+              <a href="https://www.flaticon.com/authors/freepik" title="Freepik">
+                Freepik
+              </a>{' '}
+              from{' '}
+              <a href="https://www.flaticon.com/" title="Flaticon">
+                www.flaticon.com
+              </a>
+            </FlatCredit>
+          </div>
         </HomeTag>
       );
     }
