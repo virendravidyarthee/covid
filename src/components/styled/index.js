@@ -14,6 +14,9 @@ export const HeaderText = styled.p`
 `;
 
 export const CurrentCasesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   margin-right: 16px;
   margin-left: 16px;
   width: '100%';
@@ -21,7 +24,19 @@ export const CurrentCasesContainer = styled.div`
   border: 0.5px solid yellow;
 `;
 
-export const StandardText = styled.h4`
+export const HowItWorksContainer = styled.div`
+  margin-right: 16px;
+  margin-left: 16px;
+  width: '100%';
+  border-radius: 8px;
+  border: 0.5px solid yellow;
+`;
+
+export const ColumnDiv = styled.div`
+  flex-direction: column;
+`;
+
+export const StandardText = styled.h5`
   color: white;
   text-align: center;
   margin-left: 4px;
@@ -35,7 +50,7 @@ export const StandardParagraph = styled.p`
   font-size: 11px;
 `;
 
-export const LargeText = styled.h1`
+export const LargeText = styled.p`
   color: white;
   text-align: center;
 `;

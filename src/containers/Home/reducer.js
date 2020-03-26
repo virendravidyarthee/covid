@@ -5,6 +5,8 @@ import {
   UPDATE_DIMENSIONS,
   SET_CROSSHAIR_VALUES,
   CLEAR_CROSSHAIR_VALUES,
+  FETCH_CURRENT_DATA,
+  FETCH_CURRENT_DATA_SUCCESS,
 } from './actions';
 
 const initialState = {
@@ -13,8 +15,13 @@ const initialState = {
   graphData: [],
   height: 800,
   width: 400,
-  is_loading: false,
+  isPredictionsLoading: true,
+  isCurrenDataLoading: true,
   crosshairValues: [],
+  failureMessage: '',
+  currentTotalCases: null,
+  currentRecoveredCases: null,
+  currentDeceasedCases: null,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -30,15 +37,33 @@ export default function loginReducer(state = initialState, action) {
         lastWeek: action.payload.lastWeekData,
         nextWeek: action.payload.nextWeekPredictions,
         graphData: action.payload.graphData,
+        isPredictionsLoading: false,
       };
     case FETCH_DATA_FAILURE:
-      return { ...state, is_loading: false };
+      return {
+        ...state,
+        is_loading: false,
+        failureMessage: action.payload.message,
+      };
     case UPDATE_DIMENSIONS:
       return { ...state, height: action.payload.height, width: action.payload.width };
     case SET_CROSSHAIR_VALUES:
       return { ...state, crosshairValues: action.payload.values };
     case CLEAR_CROSSHAIR_VALUES:
       return { ...state, crosshairValues: [] };
+    case FETCH_CURRENT_DATA:
+      return {
+        ...state,
+        isCurrenDataLoading: true,
+      };
+    case FETCH_CURRENT_DATA_SUCCESS:
+      return {
+        ...state,
+        currentTotalCases: action.payload.currentTotalCases,
+        currentRecoveredCases: action.payload.currentRecoveredCases,
+        currentDeceasedCases: action.payload.currentDeceasedCases,
+        isCurrenDataLoading: false,
+      };
     default:
       return state;
   }
@@ -52,8 +77,12 @@ export function getNextWeek(state) {
   return state.loginReducer.nextWeek;
 }
 
-export function getIsLoading(state) {
-  return state.loginReducer.is_loading;
+export function getIsPredictionsLoading(state) {
+  return state.loginReducer.isPredictionsLoadingoading;
+}
+
+export function getIsCurrentDataLoading(state) {
+  return state.loginReducer.isCurrenDataLoading;
 }
 
 export function getGraphData(state) {
@@ -70,4 +99,16 @@ export function getHeight(state) {
 
 export function getCrosshairValues(state) {
   return state.loginReducer.crosshairValues;
+}
+
+export function getCurrentTotalCases(state) {
+  return state.loginReducer.currentTotalCases;
+}
+
+export function getCurrentRecoveredCases(state) {
+  return state.loginReducer.currentRecoveredCases;
+}
+
+export function getCurrentDeceasedCases(state) {
+  return state.loginReducer.currentDeceasedCases;
 }
