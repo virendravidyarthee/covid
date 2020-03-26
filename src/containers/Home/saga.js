@@ -38,7 +38,7 @@ function* fetchData(action) {
       rAccumulator.push(r);
     }
     let meanR = average(rAccumulator);
-    Array.from({ length: accumulator.length - 1 }, (_, i) => {
+    Array.from({ length: 7 }, (_, i) => {
       let prediction = firstTotalCases * Math.pow(1 + meanR, i + accumulator.length);
       predictionAccumulator.push(Math.ceil(prediction));
       return null;
