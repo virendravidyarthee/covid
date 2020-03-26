@@ -29,7 +29,9 @@ function* fetchData(action) {
     for (let index = accumulator.length - 2; index > -1; index--) {
       const record = accumulator[index];
       let nthTotalCases = record.total_cases;
-      let logDifference = Math.log(nthTotalCases) - Math.log(firstTotalCases);
+      let logDifference =
+        Math.log(parseInt(nthTotalCases.replace(/,/g, ''))) -
+        Math.log(parseInt(firstTotalCases.replace(/,/g, '')));
       // eslint-disable-next-line
     let logDiffByX = logDifference / ((accumulator.length - 1) - index);
       let r = Math.exp(logDiffByX) - 1;
@@ -49,7 +51,7 @@ function* fetchData(action) {
     });
     let lastWeekRecord = accumulator.map(record => {
       return {
-        total_cases: record.total_cases,
+        total_cases: parseInt(record.total_cases.replace(/,/g, '')),
         date: moment(record.record_date, 'YYYY-MM-DD'),
       };
     });

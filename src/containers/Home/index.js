@@ -87,7 +87,8 @@ class Home extends React.Component {
         <HomeTag>
           <CenterAligned>
             <Loader type="MutatingDots" color="yellow" height={100} width={100} />
-            <StandardText>Calculating...</StandardText>
+            <StandardText>Calculating.</StandardText>
+            <StandardParagraph>Please stay on this page...</StandardParagraph>
           </CenterAligned>
         </HomeTag>
       );
