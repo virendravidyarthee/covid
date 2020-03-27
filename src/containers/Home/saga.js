@@ -56,27 +56,27 @@ function* fetchData(action) {
     });
     predictionAccumulator = predictionAccumulator.map((element, index) => {
       return {
-        total_cases: element,
-        date: getNthDay(index + 1),
+        y: element,
+        x: getNthDay(index + 1),
       };
     });
     let lastWeekRecord = accumulator.map(record => {
       return {
-        total_cases: parseInt(record.total_cases.replace(/,/g, '')),
-        date: moment(record.record_date, 'YYYY-MM-DD'),
+        y: parseInt(record.total_cases.replace(/,/g, '')),
+        x: moment(record.record_date, 'YYYY-MM-DD'),
       };
     });
-    let graphData = lastWeekRecord.reverse().concat(predictionAccumulator);
+    let lastWeekGraphData = lastWeekRecord.reverse();
+    let nextWeekGraphData = predictionAccumulator.slice(0);
+    nextWeekGraphData.unshift(lastWeekRecord[lastWeekRecord.length - 1]);
     console.log(`Mean R: ${meanR}`);
     yield put({
       type: FETCH_DATA_SUCCESS,
       payload: {
         lastWeekData: lastWeekRecord,
         nextWeekPredictions: predictionAccumulator,
-        graphData: graphData.map(data => ({
-          x: data.date,
-          y: data.total_cases,
-        })),
+        lastWeekGraphData: lastWeekGraphData,
+        nextWeekGraphData: nextWeekGraphData,
         is_loading: false,
       },
     });

@@ -12,7 +12,8 @@ import {
 const initialState = {
   lastWeek: [],
   nextWeek: [],
-  graphData: [],
+  lastWeekGraphData: [],
+  nextWeekGraphData: [],
   height: 800,
   width: 400,
   isPredictionsLoading: true,
@@ -36,7 +37,8 @@ export default function loginReducer(state = initialState, action) {
         ...state,
         lastWeek: action.payload.lastWeekData,
         nextWeek: action.payload.nextWeekPredictions,
-        graphData: action.payload.graphData,
+        lastWeekGraphData: action.payload.lastWeekGraphData,
+        nextWeekGraphData: action.payload.nextWeekGraphData,
         isPredictionsLoading: false,
       };
     case FETCH_DATA_FAILURE:
@@ -85,8 +87,12 @@ export function getIsCurrentDataLoading(state) {
   return state.loginReducer.isCurrenDataLoading;
 }
 
-export function getGraphData(state) {
-  return state.loginReducer.graphData;
+export function getLastWeekGraphData(state) {
+  return state.loginReducer.lastWeekGraphData;
+}
+
+export function getNextWeekGraphData(state) {
+  return state.loginReducer.nextWeekGraphData;
 }
 
 export function getWidth(state) {

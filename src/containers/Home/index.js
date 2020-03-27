@@ -2,7 +2,6 @@ import React from 'react';
 import {
   getLastWeek,
   getNextWeek,
-  getGraphData,
   getHeight,
   getWidth,
   getCrosshairValues,
@@ -10,6 +9,8 @@ import {
   getCurrentDeceasedCases,
   getCurrentRecoveredCases,
   getIsPredictionsLoading,
+  getLastWeekGraphData,
+  getNextWeekGraphData,
 } from './reducer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -90,8 +91,8 @@ class Home extends React.Component {
       return predictionArray.map((prediction, index) => {
         return (
           <PredictionDay key={index}>
-            <PredictionCountText>{prediction.total_cases}</PredictionCountText>
-            <PredictionDateText>{prediction.date.format('ddd,D/M')}</PredictionDateText>
+            <PredictionCountText>{prediction.y}</PredictionCountText>
+            <PredictionDateText>{prediction.x.format('ddd,D/M')}</PredictionDateText>
           </PredictionDay>
         );
       });
@@ -143,7 +144,23 @@ class Home extends React.Component {
                   }}
                   style={{ fill: 'none' }}
                   color="yellow"
-                  data={this.props.graphData}
+                  data={this.props.lastWeekGraphData}
+                />
+                <LineMarkSeries
+                  strokeStyle="dashed"
+                  onNearestX={value => {
+                    this.props.dispatch(
+                      setCrosshairValues([
+                        {
+                          x: value.x.toDate(),
+                          y: value.y,
+                        },
+                      ]),
+                    );
+                  }}
+                  style={{ fill: 'none' }}
+                  color="orange"
+                  data={this.props.nextWeekGraphData}
                 />
                 <HorizontalGridLines />
                 <Crosshair values={this.props.crosshairValues}></Crosshair>
@@ -200,7 +217,8 @@ const mapStateToProps = state => ({
   lastWeek: getLastWeek(state),
   nextWeek: getNextWeek(state),
   is_loading: getIsPredictionsLoading(state),
-  graphData: getGraphData(state),
+  lastWeekGraphData: getLastWeekGraphData(state),
+  nextWeekGraphData: getNextWeekGraphData(state),
   height: getHeight(state),
   width: getWidth(state),
   crosshairValues: getCrosshairValues(state),
@@ -217,7 +235,8 @@ Home.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
   crosshairValues: PropTypes.array,
-  graphData: PropTypes.array,
+  lastWeekGraphData: PropTypes.array,
+  nextWeekGraphData: PropTypes.array,
   currentTotalCases: PropTypes.string,
   currentRecoveredCases: PropTypes.string,
   currentDeceasedCases: PropTypes.string,
