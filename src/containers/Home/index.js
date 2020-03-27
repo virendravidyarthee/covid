@@ -132,21 +132,6 @@ class Home extends React.Component {
                 height={this.props.height * 0.45}
                 width={this.props.width * 0.95}>
                 <LineMarkSeries
-                  onNearestX={value => {
-                    this.props.dispatch(
-                      setCrosshairValues([
-                        {
-                          x: value.x.toDate(),
-                          y: value.y,
-                        },
-                      ]),
-                    );
-                  }}
-                  style={{ fill: 'none' }}
-                  color="yellow"
-                  data={this.props.lastWeekGraphData}
-                />
-                <LineMarkSeries
                   strokeStyle="dashed"
                   onNearestX={value => {
                     this.props.dispatch(
@@ -161,6 +146,21 @@ class Home extends React.Component {
                   style={{ fill: 'none' }}
                   color="orange"
                   data={this.props.nextWeekGraphData}
+                />
+                <LineMarkSeries
+                  onNearestX={value => {
+                    this.props.dispatch(
+                      setCrosshairValues([
+                        {
+                          x: value.x.toDate(),
+                          y: value.y,
+                        },
+                      ]),
+                    );
+                  }}
+                  style={{ fill: 'none' }}
+                  color="yellow"
+                  data={this.props.lastWeekGraphData}
                 />
                 <HorizontalGridLines />
                 <Crosshair values={this.props.crosshairValues}></Crosshair>
