@@ -1,4 +1,3 @@
-import { getLastNDays } from '../../utils';
 export const FETCH_DATA = 'fetch_data';
 export const FETCH_DATA_SUCCESS = 'fetch_data_success';
 export const FETCH_DATA_FAILURE = 'fetch_data_failure';
@@ -9,9 +8,8 @@ export const FETCH_CURRENT_DATA = 'get_current_data';
 export const FETCH_CURRENT_DATA_SUCCESS = 'get_current_data_success';
 export const FETCH_CURRENT_DATA_FAILURE = 'get_current_data_failure';
 
-export function fetchData(country, lastNDays) {
-  let historicalDates = getLastNDays(lastNDays);
-  return { type: FETCH_DATA, payload: { country, historicalDates } };
+export function fetchData(country) {
+  return { type: FETCH_DATA, payload: { country } };
 }
 
 export function updateDimensions(width, height) {
