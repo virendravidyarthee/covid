@@ -11,6 +11,8 @@ import {
   getIsPredictionsLoading,
   getLastWeekGraphData,
   getNextWeekGraphData,
+  getDidApiCallFail,
+  getFailureMessage,
 } from './reducer';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -39,6 +41,8 @@ import {
   FlatCredit,
   ColumnDiv,
   HowItWorksContainer,
+  Button,
+  CenterFlex,
 } from '../../components/styled';
 import Loader from 'react-loader-spinner';
 import { XYPlot, HorizontalGridLines, XAxis, YAxis, LineMarkSeries, Crosshair } from 'react-vis';
@@ -73,8 +77,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getCurrentData('india'));
-    this.props.dispatch(fetchData('india', 10));
+    this.fetchData();
     window.addEventListener('resize', this.updateWindowDimensions.bind(this));
     this.updateWindowDimensions();
   }
@@ -86,6 +89,12 @@ class Home extends React.Component {
   updateWindowDimensions() {
     this.props.dispatch(updateDimensions(window.innerWidth, window.innerHeight));
   }
+
+  fetchData() {
+    this.props.dispatch(getCurrentData('india'));
+    this.props.dispatch(fetchData('india', 10));
+  }
+
   render() {
     let todaysRecord = this.props.lastWeek[this.props.lastWeek.length - 1];
     const getPredictionDays = predictionArray => {
@@ -98,7 +107,21 @@ class Home extends React.Component {
         );
       });
     };
-    return (
+    return this.props.didApiCallFail ? (
+      <HomeTag>
+        <CenterAligned>
+          <CenterFlex>
+            <LargeText>{this.props.failureMessage}</LargeText>
+            <Button
+              onClick={() => {
+                this.fetchData();
+              }}>
+              Refresh
+            </Button>
+          </CenterFlex>
+        </CenterAligned>
+      </HomeTag>
+    ) : (
       <HomeTag>
         <HomeHeader>
           <HeaderText>{pageTitle}</HeaderText>
@@ -189,15 +212,17 @@ class Home extends React.Component {
           </div>
         ) : (
           <CenterAligned>
-            <Loader
-              style={{ margin: 'auto' }}
-              type="MutatingDots"
-              color="yellow"
-              height={100}
-              width={100}
-            />
-            <StandardText>Analysing.</StandardText>
-            <StandardParagraph>Please stay on this page...</StandardParagraph>
+            <CenterFlex>
+              <Loader
+                style={{ margin: 'auto' }}
+                type="MutatingDots"
+                color="yellow"
+                height={100}
+                width={100}
+              />
+              <StandardText>Analysing.</StandardText>
+              <StandardParagraph>Please stay on this page...</StandardParagraph>
+            </CenterFlex>
           </CenterAligned>
         )}
       </HomeTag>
@@ -217,6 +242,8 @@ const mapStateToProps = state => ({
   currentTotalCases: getCurrentTotalCases(state),
   currentRecoveredCases: getCurrentRecoveredCases(state),
   currentDeceasedCases: getCurrentDeceasedCases(state),
+  didApiCallFail: getDidApiCallFail(state),
+  failureMessage: getFailureMessage(state),
 });
 
 Home.propTypes = {
@@ -232,6 +259,8 @@ Home.propTypes = {
   currentTotalCases: PropTypes.string,
   currentRecoveredCases: PropTypes.string,
   currentDeceasedCases: PropTypes.string,
+  didApiCallFail: PropTypes.bool,
+  failureMessage: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(Home);

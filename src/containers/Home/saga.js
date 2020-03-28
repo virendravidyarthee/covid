@@ -85,7 +85,7 @@ function* fetchData(action) {
       type: FETCH_DATA_FAILURE,
       payload: {
         is_loading: false,
-        message: 'Something went wrong, Please refresh.',
+        message: 'Something went wrong, please refresh.',
       },
     });
   }

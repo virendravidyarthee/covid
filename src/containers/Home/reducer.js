@@ -23,6 +23,7 @@ const initialState = {
   currentTotalCases: null,
   currentRecoveredCases: null,
   currentDeceasedCases: null,
+  didApiCallFail: false,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -31,6 +32,7 @@ export default function loginReducer(state = initialState, action) {
       return {
         ...state,
         is_loading: true,
+        didApiCallFail: false,
       };
     case FETCH_DATA_SUCCESS:
       return {
@@ -46,6 +48,7 @@ export default function loginReducer(state = initialState, action) {
         ...state,
         is_loading: false,
         failureMessage: action.payload.message,
+        didApiCallFail: true,
       };
     case UPDATE_DIMENSIONS:
       return { ...state, height: action.payload.height, width: action.payload.width };
@@ -57,6 +60,7 @@ export default function loginReducer(state = initialState, action) {
       return {
         ...state,
         isCurrenDataLoading: true,
+        didApiCallFail: false,
       };
     case FETCH_CURRENT_DATA_SUCCESS:
       return {
@@ -117,4 +121,12 @@ export function getCurrentRecoveredCases(state) {
 
 export function getCurrentDeceasedCases(state) {
   return state.loginReducer.currentDeceasedCases;
+}
+
+export function getDidApiCallFail(state) {
+  return state.loginReducer.didApiCallFail;
+}
+
+export function getFailureMessage(state) {
+  return state.loginReducer.failureMessage;
 }

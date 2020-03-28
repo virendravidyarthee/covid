@@ -59,8 +59,31 @@ export const CenterAligned = styled.div`
   margin: auto;
 `;
 
+export const CenterFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const FullWidthDiv = styled.div`
   width: 100%;
+`;
+
+export const Button = styled.a`
+  /* This renders the buttons above... Edit me! */
+  display: inline-block;
+  border-radius: 8px;
+  padding: 0.5rem 0;
+  margin: 0.5rem 1rem;
+  width: 11rem;
+  color: black;
+  text-align: center;
+  border: 2px solid black;
+  background: #c4c431;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const PredictionTimelineContainer = styled.div`
