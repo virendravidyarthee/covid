@@ -108,6 +108,25 @@ function* fetchCurrentData(action) {
           currentDeceasedCases: currentRecord.total_deaths,
         },
       });
+    } else {
+      let todayDataResponse = yield call(unAuthAxios, 'get', getDataByCountryAndDate, {
+        country: action.payload.country,
+        date: moment()
+          .subtract(1, 'day')
+          .format('YYYY-MM-DD'),
+      });
+      if (todayDataResponse.data.stat_by_country.length !== 0) {
+        let currentRecord =
+          todayDataResponse.data.stat_by_country[todayDataResponse.data.stat_by_country.length - 1];
+        yield put({
+          type: FETCH_CURRENT_DATA_SUCCESS,
+          payload: {
+            currentTotalCases: currentRecord.total_cases,
+            currentRecoveredCases: currentRecord.total_recovered,
+            currentDeceasedCases: currentRecord.total_deaths,
+          },
+        });
+      }
     }
   } catch (error) {
     yield put({
