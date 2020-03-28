@@ -55,6 +55,7 @@ import {
   currentRecoveredCases,
   currentDeceasedCases,
 } from '../../utils/data';
+import moment from 'moment';
 
 const HomeTag = styled.div`
   width: 100%;
@@ -133,16 +134,6 @@ class Home extends React.Component {
                 width={this.props.width * 0.95}>
                 <LineMarkSeries
                   strokeStyle="dashed"
-                  onNearestX={value => {
-                    this.props.dispatch(
-                      setCrosshairValues([
-                        {
-                          x: value.x.toDate(),
-                          y: value.y,
-                        },
-                      ]),
-                    );
-                  }}
                   style={{ fill: 'none' }}
                   color="orange"
                   data={this.props.nextWeekGraphData}
@@ -160,7 +151,8 @@ class Home extends React.Component {
                   }}
                   style={{ fill: 'none' }}
                   color="yellow"
-                  data={this.props.lastWeekGraphData}
+                  getNull={data => !moment(data.x).isSameOrAfter(moment())}
+                  data={this.props.lastWeekGraphData.concat(this.props.nextWeekGraphData)}
                 />
                 <HorizontalGridLines />
                 <Crosshair values={this.props.crosshairValues}></Crosshair>
