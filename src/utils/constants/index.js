@@ -13,3 +13,4 @@ export const colors = {
 };
 
 export const apiKey = '5aa871fb55msha1efb1e49628ad0p15ec67jsn429c11038010';
+export const googleAnalytics = 'UA-162083533-1';

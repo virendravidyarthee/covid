@@ -24,7 +24,7 @@ import {
   getCurrentData,
 } from './actions';
 import styled from 'styled-components';
-import { colors } from '../../utils/constants';
+import { colors, googleAnalytics } from '../../utils/constants';
 import {
   CurrentCasesContainer,
   HomeHeader,
@@ -60,6 +60,8 @@ import {
   currentDeceasedCases,
 } from '../../utils/data';
 import moment from 'moment';
+import process from 'process';
+import ReactGA from 'react-ga';
 
 const HomeTag = styled.div`
   width: 100%;
@@ -80,6 +82,10 @@ class Home extends React.Component {
     this.fetchData();
     window.addEventListener('resize', this.updateWindowDimensions.bind(this));
     this.updateWindowDimensions();
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    } else {
+      ReactGA.initialize(googleAnalytics);
+    }
   }
 
   componentWillUnmount() {
