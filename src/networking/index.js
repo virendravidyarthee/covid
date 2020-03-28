@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { apiKey } from '../utils/constants';
 
-const APITimeout = 3000;
+const APITimeout = 10000;
 
 const baseUrl = 'https://coronavirus-monitor.p.rapidapi.com/';
 
