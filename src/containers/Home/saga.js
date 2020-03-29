@@ -69,6 +69,7 @@ function* fetchData(action) {
     let lastWeekGraphData = lastWeekRecord.reverse();
     let nextWeekGraphData = predictionAccumulator.slice(0);
     nextWeekGraphData.unshift(lastWeekRecord[lastWeekRecord.length - 1]);
+    console.log(rAccumulator);
     console.log(`Mean R: ${meanR}`);
     yield put({
       type: FETCH_DATA_SUCCESS,
