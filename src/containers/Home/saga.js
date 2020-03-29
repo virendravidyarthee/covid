@@ -51,14 +51,8 @@ function* fetchData(action) {
     let meanR = average(rAccumulator);
     Array.from({ length: 8 }, (_, i) => {
       let prediction = firstTotalCases * Math.pow(1 + meanR, i + accumulator.length - 2);
-      predictionAccumulator.push(Math.ceil(prediction));
+      predictionAccumulator.push({ y: Math.ceil(prediction), x: getNthDay(i) });
       return null;
-    });
-    predictionAccumulator = predictionAccumulator.map((element, index) => {
-      return {
-        y: element,
-        x: getNthDay(index + 1),
-      };
     });
     let lastWeekRecord = accumulator.map(record => {
       return {
