@@ -6,7 +6,7 @@ const APITimeout = 60000;
 const baseUrl = 'https://coronavirus-monitor.p.rapidapi.com/';
 
 //By country, by date
-export const getDataByCountryAndDate = 'coronavirus/history_by_country_and_date.php';
+export const getDataByCountryAndDate = 'coronavirus/history_by_particular_country_by_date.php';
 
 //By country
 export const getDataByCountry = 'coronavirus/cases_by_particular_country.php';
