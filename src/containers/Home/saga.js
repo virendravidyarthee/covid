@@ -36,13 +36,13 @@ function* fetchData(action) {
       }
     });
     accumulator = accumulator.reverse();
-    let firstTotalCases = accumulator[accumulator.length - 1].total_cases;
+    let firstTotalCases = parseInt(
+      accumulator[accumulator.length - 1].total_cases.replace(/,/g, ''),
+    );
     for (let index = accumulator.length - 2; index > -1; index--) {
       const record = accumulator[index];
-      let nthTotalCases = record.total_cases;
-      let logDifference =
-        Math.log(parseInt(nthTotalCases.replace(/,/g, ''))) -
-        Math.log(parseInt(firstTotalCases.replace(/,/g, '')));
+      let nthTotalCases = parseInt(record.total_cases.replace(/,/g, ''));
+      let logDifference = Math.log(nthTotalCases) - Math.log(firstTotalCases);
       // eslint-disable-next-line
     let logDiffByX = logDifference / ((accumulator.length - 1) - index);
       let r = Math.exp(logDiffByX) - 1;
