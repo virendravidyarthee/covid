@@ -174,7 +174,7 @@ class Home extends React.Component {
                   }}
                   style={{ fill: 'none' }}
                   color="yellow"
-                  getNull={data => !moment(data.x).isSameOrAfter(moment().subtract(1, 'day'))}
+                  getNull={data => !moment(data.x).isSameOrAfter(moment())}
                   data={this.props.lastWeekGraphData.concat(this.props.nextWeekGraphData)}
                 />
                 <HorizontalGridLines />
