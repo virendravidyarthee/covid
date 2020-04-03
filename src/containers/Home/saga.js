@@ -6,7 +6,7 @@ import {
   FETCH_CURRENT_DATA,
   FETCH_CURRENT_DATA_SUCCESS,
 } from './actions';
-import { unAuthAxios, getDataByCountryAndDate, getDataByCountry } from '../../networking';
+import { unAuthAxios, getDataByCountry, latestStatByCountry } from '../../networking';
 import { getNthDay } from '../../utils';
 import moment from 'moment';
 
@@ -50,7 +50,7 @@ function* fetchData(action) {
     }
     let meanR = average(rAccumulator);
     Array.from({ length: 8 }, (_, i) => {
-      let prediction = firstTotalCases * Math.pow(1 + meanR, i + accumulator.length - 1);
+      let prediction = firstTotalCases * Math.pow(1 + meanR, i + accumulator.length);
       predictionAccumulator.push({ y: Math.ceil(prediction), x: getNthDay(i) });
       return null;
     });
@@ -88,41 +88,19 @@ function* fetchData(action) {
 
 function* fetchCurrentData(action) {
   try {
-    let todayDataResponse = yield call(unAuthAxios, 'get', getDataByCountryAndDate, {
+    let todayDataResponse = yield call(unAuthAxios, 'get', latestStatByCountry, {
       country: action.payload.country,
-      date: moment().format('YYYY-MM-DD'),
     });
-    if (todayDataResponse.data.stat_by_country.length !== 0) {
-      let currentRecord =
-        todayDataResponse.data.stat_by_country[todayDataResponse.data.stat_by_country.length - 1];
-      yield put({
-        type: FETCH_CURRENT_DATA_SUCCESS,
-        payload: {
-          currentTotalCases: currentRecord.total_cases,
-          currentRecoveredCases: currentRecord.total_recovered,
-          currentDeceasedCases: currentRecord.total_deaths,
-        },
-      });
-    } else {
-      let todayDataResponse = yield call(unAuthAxios, 'get', getDataByCountryAndDate, {
-        country: action.payload.country,
-        date: moment()
-          .subtract(1, 'day')
-          .format('YYYY-MM-DD'),
-      });
-      if (todayDataResponse.data.stat_by_country.length !== 0) {
-        let currentRecord =
-          todayDataResponse.data.stat_by_country[todayDataResponse.data.stat_by_country.length - 1];
-        yield put({
-          type: FETCH_CURRENT_DATA_SUCCESS,
-          payload: {
-            currentTotalCases: currentRecord.total_cases,
-            currentRecoveredCases: currentRecord.total_recovered,
-            currentDeceasedCases: currentRecord.total_deaths,
-          },
-        });
-      }
-    }
+
+    let currentRecord = todayDataResponse.data.latest_stat_by_country[0];
+    yield put({
+      type: FETCH_CURRENT_DATA_SUCCESS,
+      payload: {
+        currentTotalCases: currentRecord.total_cases,
+        currentRecoveredCases: currentRecord.total_recovered,
+        currentDeceasedCases: currentRecord.total_deaths,
+      },
+    });
   } catch (error) {
     yield put({
       type: FETCH_DATA_FAILURE,

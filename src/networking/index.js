@@ -11,6 +11,9 @@ export const getDataByCountryAndDate = 'coronavirus/history_by_particular_countr
 //By country
 export const getDataByCountry = 'coronavirus/cases_by_particular_country.php';
 
+//Latest stat by county
+export const latestStatByCountry = 'coronavirus/latest_stat_by_country.php';
+
 const contentTypeHeaders = {
   'content-type': 'application/octet-stream',
   'x-rapidapi-host': 'coronavirus-monitor.p.rapidapi.com',

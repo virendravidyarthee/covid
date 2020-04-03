@@ -2,8 +2,7 @@ export const pageTitle = 'Covid-19 predictions in India';
 export const currentNumberOfCases = 'Total cases';
 export const currentRecoveredCases = 'Recovered';
 export const currentDeceasedCases = 'Deceased';
-export const totalProjections =
-  'Confirmed total cases projections over the coming week: (±70 cases)';
+export const totalProjections = 'Total cases projections over the coming week: (±100 cases)';
 export const howItWorks = 'How it works';
 export const explanation =
   "The past week's data is analysed to determine the growth rate of total confirmed " +
